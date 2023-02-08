@@ -18,6 +18,9 @@ db.on("error", console.error.bind(console, 'MongoDB connection error:'));
 // port
 const PORT = process.env.PORT || 4000;
 
+// middleware
+app.use(bodyParser.json());
+
 app.get('/', (req, res) =>{
     res.json({message: 'API Working'});
 })
