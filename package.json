@@ -1,0 +1,28 @@
+{
+  "name": "express-auth",
+  "version": "1.0.0",
+  "description": "Authentication using Express, MongoDB, and JWT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elsiechen/express-auth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elsiechen/express-auth/issues"
+  },
+  "homepage": "https://github.com/elsiechen/express-auth#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.3",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.1"
+  }
+}
