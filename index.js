@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const userRouter = require('../routes/user');
 const app = express();
 
 // connect to MongoDB
@@ -20,6 +20,9 @@ const PORT = process.env.PORT || 4000;
 
 // middleware
 app.use(bodyParser.json());
+
+// add user routes to middleware chain
+app.use('/user', userRouter);
 
 app.get('/', (req, res) =>{
     res.json({message: 'API Working'});
