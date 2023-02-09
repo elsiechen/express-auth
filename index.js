@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('../routes/user');
 const app = express();
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 // connect to MongoDB
 // import mongoose module
@@ -27,6 +30,16 @@ app.use('/user', userRouter);
 app.get('/', (req, res) =>{
     res.json({message: 'API Working'});
 })
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
 
 app.listen(PORT, (req, res) =>{
     console.log(`Server started at PORT ${PORT}`);
