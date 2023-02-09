@@ -3,6 +3,7 @@ const {validationResult, body} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// handle user signup on post
 exports.signup_post = [
     body('username', 'Please enter a Username.').trim().isLength({min:1}).escape(),
     body('email', 'Please enter a valid email.').isEmail().normalizeEmail(),
@@ -55,13 +56,65 @@ exports.signup_post = [
             'randomString',
             { expiresIn: 10000},
             (err, token) =>{
-                if(err) next(err);
+                if(err) return next(err);
                 res.status(200).json({token});
             }
-        )
+        );
 
     },
 
-]
+];
 
+// handle user login on post
+exports.login_post = [
+    body('email', 'Please enter a valid email.').isEmail().normalizeEmail(),
+    body('password', 'Please enter a password with at least 6 characters.').isLength({min:6}),
+
+    // process after validation
+    (req, res, next) =>{
+        // extract errors from request
+        const errors = validationResult(req);
+
+        const { email, password } = req.body;
+
+        // there's error, re-render the form with escaped and trimmed data with error message
+        if(!errors.isEmpty()){
+            res.render('login_form',{
+                title: 'Log In',
+                email: req.email,
+                errors: errors.array()
+            });
+            return;
+        }
+
+        
+        User.findOne({email: email}).exec((err, found_user)=>{
+            if(err) return next(err);
+            // user not exist
+            if(found_user == null){
+                return res.status(400).json({msg: 'User Not Exist'});
+            }
+            // validate if password is correct
+            const isCorrect = bcrypt.compare(password, found_user.password);
+            // if password is not correct
+            if(!isCorrect){
+                return res.status(400).json({msg: 'Incorrect Password'});
+            }
+
+            const payload = {
+                user: {id: found_user.id}
+            };
+            // get json web token
+            jwt.sign(
+                payload,
+                'randomString',
+                { expiresIn: 3600},
+                (err, token) =>{
+                    if(err) return next(err);
+                    res.status(200).json({token});
+                }
+            );
+        });
+    }
+];
 

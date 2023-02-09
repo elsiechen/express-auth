@@ -31,3 +31,5 @@ app.get('/', (req, res) =>{
 app.listen(PORT, (req, res) =>{
     console.log(`Server started at PORT ${PORT}`);
 });
+
+module.exports = index;
