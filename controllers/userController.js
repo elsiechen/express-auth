@@ -3,6 +3,7 @@ const {validationResult, body} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
 // handle user signup on post
 exports.signup_post = [
     body('username', 'Please enter a Username.').trim().isLength({min:1}).escape(),
@@ -118,4 +119,13 @@ exports.login_post = [
     }
 ];
 
-
+// get loggedIn user
+exports.login_user_get = (req, res, next) =>{
+    // req.user is fetched after token authentication
+    User.findById(req.user.id).exec((err, found_user)=>{
+        if(err) return next(err);
+        if(found_user == null) res.send({message: 'Not authorized user'});
+        
+        res.json(found_user.id);
+    });
+}
