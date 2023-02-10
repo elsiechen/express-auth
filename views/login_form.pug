@@ -11,12 +11,12 @@ block content
 
                     form(method='POST', action='')
                         div.form-outline.mb-4
-                            input.form-control.form-control-lg#name(type="email",
+                            input.form-control.form-control-lg#email(type="email",
                                 value=(user===undefined?'':user.email))
                             label.form-label(for="email") Your Email
                         
                         div.form-outline.mb-4
-                            input.form-control.form-control-lg#name(type="password")
+                            input.form-control.form-control-lg#password(type="password")
                             label.form-label(for="password") Your Password
                         
                         div.d-flex.justify-content-center
