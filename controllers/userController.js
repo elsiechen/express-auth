@@ -3,6 +3,10 @@ const {validationResult, body} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// handle user signup on get
+exports.signup_get = (req, res, next) =>{
+    res.render('signup_form',{ title: 'Sign Up'});
+};
 
 // handle user signup on post
 exports.signup_post = [
@@ -66,6 +70,11 @@ exports.signup_post = [
 
 ];
 
+// handle user login on get
+exports.login_get = (req, res, next) =>{
+    res.render('login_form',{ title: 'Log In'});
+};
+
 // handle user login on post
 exports.login_post = [
     body('email', 'Please enter a valid email.').isEmail().normalizeEmail(),
@@ -128,4 +137,4 @@ exports.login_user_get = (req, res, next) =>{
         
         res.json(found_user.id);
     });
-}
+};

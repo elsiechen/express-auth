@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  div.center.height-80
+    div
+      h1= title
+      p Welcome to #{title}, a basic Express website.
+      p This is home page.
+
+      if errors 
+        ul 
+          for error in errors
+            li!=error.msg 
