@@ -4,23 +4,24 @@ block content
         div.card(style="border-radius: 15px; width: 500px; height:600px")
             div.card-body
                 h2.card-title.text-center.mb ENTER YOUR ACCOUNT
-                    form.card-text.text-left(method='POST', action='')
-                        div.form-group
-                            label.form-label.font-12(for="email") Your Email
-                            input.form-control.form-control-lg#email(type="email",
-                                value=(user===undefined?'':user.email))                                                  
-                        div.form-group
-                            label.form-label(for="password") Your Password
-                            input.form-control.form-control-lg#password(type="password")
-                            
-                        div.d-flex.justify-content-center
-                            button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") SIGN IN
-                               
-                        p.text-center.text-muted.mt-5.mb-0 Not a member? 
-                            a.fw-bold.text-body(href="/user/signup") Register here
 
-                        if errors 
-                            ul 
-                                for error in errors
-                                    li!=error.msg
+                form.card-text.text-left(method='POST', action='')
+                    div.form-group
+                        label.form-label.font-12(for="email") Your Email
+                        input.form-control.form-control-lg#email(type="email",
+                            value=(user===undefined?'':user.email))                                                  
+                    div.form-group
+                        label.form-label(for="password") Your Password
+                        input.form-control.form-control-lg#password(type="password")
+                            
+                    div.d-flex.justify-content-center.mt
+                        button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") SIGN IN
+                               
+                    p.text-center.text-muted.mt-5.mb-0 Not a member? 
+                        a.fw-bold.text-body(href="/user/signup") Register here
+
+                    if errors 
+                        ul 
+                            for error in errors
+                                li!=error.msg
     
