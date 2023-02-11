@@ -20,8 +20,8 @@ block content
                     p.text-center.text-muted.mt-5.mb-0 Not a member? 
                         a.fw-bold.text-body(href="/user/signup") Register here
 
-                    if errors 
-                        ul 
-                            for error in errors
-                                li!=error.msg
+            if errors 
+                ul 
+                    for error in errors
+                        li!=error.msg                
     

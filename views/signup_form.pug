@@ -3,37 +3,36 @@ block content
     div.center.mp
         div.card(style="border-radius: 15px; width: 500px; height:600px")
             div.card-body
-                    h2.text-center.mb CREATE AN ACCOUNT
+                h2.text-center.mb CREATE AN ACCOUNT
 
-                    form.card-text.text-left(method='POST', action='')
-                        div.form-group
-                            label.form-label(for="name") Your Name
-                            input.form-control.form-control-lg#name(type="text", 
-                                value=(user===undefined?'':user.username))
+                form.card-text.text-left(method='POST', action='')
+                    div.form-group
+                        label.form-label(for="name") Your Name
+                        input.form-control.form-control-lg#name(type="text", 
+                            value=(user===undefined?'':user.username))
                                            
-                        div.form-group
-                            label.form-label(for="email") Your Email
-                            input.form-control.form-control-lg#name(type="email",
-                                value=(user===undefined?'':user.email))
+                    div.form-group
+                        label.form-label(for="email") Your Email
+                        input.form-control.form-control-lg#name(type="email",
+                            value=(user===undefined?'':user.email))
                         
-                        div.form-group        
-                            label.form-label(for="password") Your Password        
-                            input.form-control.form-control-lg#name(type="password")
+                    div.form-group        
+                        label.form-label(for="password") Your Password        
+                        input.form-control.form-control-lg#name(type="password")
                             
-                        div.form-group
-                            input.form-check-input.ml-3#terms(type="checkbox" value="")
-                            label.form-check-.ml-5(for="terms") I agree all statements in 
-                                a.text-body(href="#!") Terms of service 
+                    div.form-group
+                        input.form-check-input.ml-3#terms(type="checkbox" value="")
+                        label.form-check-.ml-5(for="terms") I agree all statements in 
+                            a.text-body(href="#!") Terms of service 
                                         
-                        div.d-flex.justify-content-center
-                            button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") Register
+                    div.d-flex.justify-content-center
+                        button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") Register
                                             
-                        p.text-center.text-muted.mt-5.mb-0 Have already an account? 
-                            a.fw-bold.text-body(href="/user/login") Login here
-
-        
-        if errors 
-            ul 
-                for error in errors
-                    li!=error.msg                            
+                    p.text-center.text-muted.mt-5.mb-0 Have already an account?     
+                        a.fw-bold.text-body(href="/user/login") Login here       
+            
+    if errors 
+        ul 
+            for error in errors
+                li!=error.msg                            
                        
