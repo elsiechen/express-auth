@@ -1,9 +1,21 @@
 html, body {
     height: 100%;
+    background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
 }
-  
+
 .height-80 {
     height: 80%;
+}
+
+.card {
+    height: 80vh;
+}
+
+.mb {
+    margin-bottom: 30px;
+}
+.font-12{
+    font: 12px;
 }
 
 .center {
@@ -11,11 +23,6 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-
-/* .container div{
-    width: 300px;
-    height: 300px;
-} */
 
 .gradient-custom-3 {
     /* fallback for old browsers */
