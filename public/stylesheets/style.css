@@ -11,9 +11,22 @@ html, body {
     height: 80vh;
 }
 
-.mb {
-    margin-bottom: 30px;
+.mp {
+    margin-top: 40px;
 }
+
+.mb {
+    margin-bottom: 10px;
+}
+
+.ml-3 {
+    margin-left: 3px;
+}
+
+.ml-5 {
+    margin-left: 3px;
+}
+
 .font-12{
     font: 12px;
 }
