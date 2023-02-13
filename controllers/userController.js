@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const {validationResult, body} = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -10,12 +10,16 @@ exports.signup_get = (req, res, next) =>{
 
 // handle user signup on post
 exports.signup_post = [
-    body('username', 'Please enter a Username.').trim().isLength({min:1}).escape(),
+    // validate and sanitize fields 
+    body('username', 'Username must contain at least 3 characters.').trim().isLength({min:3}).escape(),
     body('email', 'Please enter a valid email.').isEmail().normalizeEmail(),
     body('password', 'Please enter a password with at least 6 characters.').isLength({min:6}),
 
     // process after validation
     (req, res, next) =>{
+        console.log(typeof req.body);
+        console.log(req.body.username);
+        console.log(req.body.email);
         // extract validation errors from request
         const errors = validationResult(req);
 
@@ -41,7 +45,7 @@ exports.signup_post = [
             if(err) return next(err);
             // email already exist
             if(user_found){
-                return res.status(400).json({msg: 'User Already Exist.'});
+                return res.status(400).json({msg: 'User Already exists.'});
             }
         });
 
@@ -52,17 +56,21 @@ exports.signup_post = [
         // save user object
         user.save((err)=>{
             if(err) return next(err);
-            res.redirect('/login');
+            // res.redirect('/user/login');
         });
+
+        const payload = {
+            user: {id: user.id}
+        };
 
         // get json web token
         jwt.sign(
             payload,
-            'randomString',
+            'secret',
             { expiresIn: 10000},
             (err, token) =>{
                 if(err) return next(err);
-                res.status(200).json({token});
+                return res.status(200).json({token});
             }
         );
 
@@ -91,7 +99,7 @@ exports.login_post = [
         if(!errors.isEmpty()){
             res.render('login_form',{
                 title: 'Log In',
-                email: req.email,
+                email: req.body.email,
                 errors: errors.array()
             });
             return;
@@ -117,7 +125,7 @@ exports.login_post = [
             // get json web token
             jwt.sign(
                 payload,
-                'randomString',
+                'secret',
                 { expiresIn: 3600},
                 (err, token) =>{
                     if(err) return next(err);

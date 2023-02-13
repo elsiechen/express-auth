@@ -5,20 +5,20 @@ block content
             div.card-body
                 h2.text-center.mb CREATE AN ACCOUNT
 
-                form.card-text.text-left(method='POST', action='')
+                form.card-text.text-left(method="POST", action="")
                     div.form-group
-                        label.form-label(for="name") Your Name
-                        input.form-control.form-control-lg#name(type="text", 
+                        label.form-label(for="username") Your Name
+                        input.form-control.form-control-lg#username(type="text",autofocus 
                             value=(user===undefined?'':user.username))
                                            
                     div.form-group
                         label.form-label(for="email") Your Email
-                        input.form-control.form-control-lg#name(type="email",
+                        input.form-control.form-control-lg#email(type="email",
                             value=(user===undefined?'':user.email))
                         
                     div.form-group        
                         label.form-label(for="password") Your Password        
-                        input.form-control.form-control-lg#name(type="password")
+                        input.form-control.form-control-lg#password(type="password")
                             
                     div.form-group
                         input.form-check-input.ml-3#terms(type="checkbox" value="")
