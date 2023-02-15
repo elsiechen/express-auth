@@ -18,8 +18,8 @@ exports.signup_post = [
     // process after validation
     (req, res, next) =>{
         console.log(typeof req.body);
-        console.log(req.body.username);
-        console.log(req.body.email);
+        console.log(req.body);
+        console.log(req.params);
         // extract validation errors from request
         const errors = validationResult(req);
 

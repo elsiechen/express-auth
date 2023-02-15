@@ -9,10 +9,10 @@ block content
                     div.form-group
                         label.form-label.font-12(for="email") Your Email
                         input.form-control.form-control-lg#email(type="email",autofocus
-                            value=(user===undefined?'':user.email))                                                  
+                            value=(user===undefined?'':user.email), name='email')                                                  
                     div.form-group
                         label.form-label(for="password") Your Password
-                        input.form-control.form-control-lg#password(type="password")
+                        input.form-control.form-control-lg#password(type="password", name='password')
                             
                     div.d-flex.justify-content-center.mt
                         button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") SIGN IN

@@ -4,24 +4,24 @@ block content
         div.card(style="border-radius: 15px; width: 500px; height:600px")
             div.card-body
                 h2.text-center.mb CREATE AN ACCOUNT
-
+                // be sure to add 'name' attribute into input, or req.body will be empty
                 form.card-text.text-left(method="POST", action="")
                     div.form-group
                         label.form-label(for="username") Your Name
                         input.form-control.form-control-lg#username(type="text",autofocus 
-                            value=(user===undefined?'':user.username))
+                            value=(user===undefined?'':user.username), name='username')
                                            
                     div.form-group
                         label.form-label(for="email") Your Email
                         input.form-control.form-control-lg#email(type="email",
-                            value=(user===undefined?'':user.email))
+                            value=(user===undefined?'':user.email), name='email')
                         
                     div.form-group        
                         label.form-label(for="password") Your Password        
-                        input.form-control.form-control-lg#password(type="password")
+                        input.form-control.form-control-lg#password(type="password", name='password')
                             
                     div.form-group
-                        input.form-check-input.ml-3#terms(type="checkbox" value="")
+                        input.form-check-input.ml-3#terms(type="checkbox" value="", name='terms')
                         label.form-check-.ml-5(for="terms") I agree all statements in 
                             a.text-body(href="#!") Terms of service 
                                         

@@ -8,6 +8,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var createError = require('http-errors');
 
+// middleware
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true}));
+// parse application/json
+app.use(bodyParser.json());
+
 // connect to MongoDB
 // import mongoose module
 const mongoose = require('mongoose');
@@ -24,9 +30,7 @@ db.on("error", console.error.bind(console, 'MongoDB connection error:'));
 // port
 const PORT = process.env.PORT || 3000;
 
-// middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+
 
 // add routes to middleware chain
 app.use('/', indexRouter);
