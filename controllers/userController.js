@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 // handle user signup on get
 exports.signup_get = (req, res, next) =>{
-    res.render('signup_form',{ title: 'Sign Up'});
+    return res.render('signup_form',{ title: 'Sign Up'});
 };
 
 // handle user signup on post
@@ -16,7 +16,7 @@ exports.signup_post = [
     body('password', 'Please enter a password with at least 6 characters.').isLength({min:6}),
 
     // process after validation
-    (req, res, next) =>{
+    async (req, res, next) =>{
         console.log(typeof req.body);
         console.log(req.body);
         console.log(req.params);
@@ -24,7 +24,11 @@ exports.signup_post = [
         const errors = validationResult(req);
 
         // create user object
-        const user = new User({
+        // don't use 'const' when create new user because password
+        // will be hashed and saved later. Instead, use 'let' to 
+        // prevent creating same user twice with same information
+        // stored in mongodb
+        let user = new User({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
@@ -32,55 +36,55 @@ exports.signup_post = [
 
         // there's error, re-render the form with escaped and trimmed data with error message
         if(!errors.isEmpty()){
-            res.render('signup_form',{
+            return res.render('signup_form',{
                 title: 'Sign Up',
                 user,
                 errors: errors.array()
             });
-            return;
         }
-
+        // use try/catch to handle errors in async function
         // check if user already exists by email
-        User.findOne({email: req.body.email}).exec((err, user_found)=>{
-            if(err) return next(err);
+        try {
+            const user_found = await User.findOne({email: req.body.email});
             // email already exist
             if(user_found){
                 return res.status(400).json({msg: 'User Already exists.'});
             }
-        });
-
-        // hash password using bcrypt 
-        const salt = bcrypt.genSalt(10);
-        user.password = bcrypt.hash(req.body.password, salt);
-
-        // save user object
-        user.save((err)=>{
-            if(err) return next(err);
-            // res.redirect('/user/login');
-        });
-
-        const payload = {
-            user: {id: user.id}
-        };
-
-        // get json web token
-        jwt.sign(
-            payload,
-            'secret',
-            { expiresIn: 10000},
-            (err, token) =>{
-                if(err) return next(err);
-                return res.status(200).json({token});
-            }
-        );
-
+            
+            // hash password using bcrypt 
+            const salt = await bcrypt.genSalt(10);
+            console.log(`salt: ${salt}`);
+            user.password = await bcrypt.hash(req.body.password, salt);
+    
+            // save user object
+            await user.save((err)=>{
+                if (err) return next(err);
+            });
+    
+            const payload = {
+                user: {id: user.id}
+            };
+    
+            // get json web token
+            jwt.sign(
+                payload,
+                'secret',
+                { expiresIn: 10000},
+                (err, token) =>{
+                    if(err) return next(err);
+                    return res.status(200).json({token});
+                }
+            );
+        } catch (err){
+            console.log(err.message);
+            return next(err);
+        }
     },
-
 ];
 
 // handle user login on get
 exports.login_get = (req, res, next) =>{
-    res.render('login_form',{ title: 'Log In'});
+    return res.render('login_form',{ title: 'Log In'});
 };
 
 // handle user login on post
@@ -89,38 +93,34 @@ exports.login_post = [
     body('password', 'Please enter a password with at least 6 characters.').isLength({min:6}),
 
     // process after validation
-    (req, res, next) =>{
+    async (req, res, next) =>{
         // extract errors from request
         const errors = validationResult(req);
 
-        const { email, password } = req.body;
-
         // there's error, re-render the form with escaped and trimmed data with error message
         if(!errors.isEmpty()){
-            res.render('login_form',{
+            return res.render('login_form',{
                 title: 'Log In',
                 email: req.body.email,
                 errors: errors.array()
             });
-            return;
         }
 
-        
-        User.findOne({email: email}).exec((err, found_user)=>{
-            if(err) return next(err);
+        try {
+            const user = await User.findOne({email: req.body.email});
             // user not exist
-            if(found_user == null){
+            if(!user){
                 return res.status(400).json({msg: 'User Not Exist'});
             }
             // validate if password is correct
-            const isCorrect = bcrypt.compare(password, found_user.password);
+            const isCorrect = await bcrypt.compare(req.body.password, user.password);
             // if password is not correct
             if(!isCorrect){
                 return res.status(400).json({msg: 'Incorrect Password'});
             }
 
             const payload = {
-                user: {id: found_user.id}
+                user: {id: user.id}
             };
             // get json web token
             jwt.sign(
@@ -129,20 +129,28 @@ exports.login_post = [
                 { expiresIn: 3600},
                 (err, token) =>{
                     if(err) return next(err);
-                    res.status(200).json({token});
+                    return res.status(200).json({token});
                 }
             );
-        });
+        } catch(err){
+            console.log(err);
+            return res.status(500).json({msg: 'Sever Error'});
+        }
     }
 ];
 
 // get loggedIn user
-exports.login_user_get = (req, res, next) =>{
-    // req.user is fetched after token authentication
-    User.findById(req.user.id).exec((err, found_user)=>{
-        if(err) return next(err);
-        if(found_user == null) res.send({message: 'Not authorized user'});
-        
-        res.json(found_user.id);
-    });
+exports.login_user_get = async (req, res, next) =>{
+    // req.user is fetched after token 
+    try {
+        const found_user = await User.findById(req.user.id);
+        if(!found_user) return res.send({message: 'Not authorized user'}); 
+          
+        return res.json(found_user.id);
+    }catch(err){
+        console.log(err);
+        return res.send({ message: "Error in Fetching user" });
+    }
+    
+    
 };
