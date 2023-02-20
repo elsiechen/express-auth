@@ -48,7 +48,6 @@ exports.signup_post = [
             const user_found = await User.findOne({email: req.body.email});
             // email already exist
             if(user_found){
-                // return res.status(400).json({msg: 'Email Already exists.'});
                 return res.render('signup_form',{
                     title: 'Sign Up',
                     user,
@@ -77,7 +76,9 @@ exports.signup_post = [
                 { expiresIn: 10000},
                 (err, token) =>{
                     if(err) return next(err);
-                    return res.status(200).json({token});
+                    // return res.status(200).json({token});
+                    console.log(`token: ${token}`);
+                    return res.redirect('/user/login');
                 }
             );
         } catch (err){

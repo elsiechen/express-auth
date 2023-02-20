@@ -41,7 +41,7 @@ html, body {
     justify-content: center;
 }
 
-ul {
+ul, .error {
     list-style-type: none;
     font-weight: bold;
     color: red;
