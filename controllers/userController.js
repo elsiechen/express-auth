@@ -33,8 +33,6 @@ exports.signup_post = [
             password: req.body.password
         });
 
-        let terms = req.body.terms;
-        
         // there's error, re-render the form with escaped and trimmed data with error message
         if(!errors.isEmpty()){
             return res.render('signup_form',{
