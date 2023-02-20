@@ -41,6 +41,12 @@ html, body {
     justify-content: center;
 }
 
+ul {
+    list-style-type: none;
+    font-weight: bold;
+    color: red;
+}
+
 .gradient-custom-3 {
     /* fallback for old browsers */
     background: #84fab0;

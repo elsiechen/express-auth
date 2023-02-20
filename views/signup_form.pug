@@ -1,7 +1,7 @@
 extends layout 
 block content 
     div.center.mp
-        div.card(style="border-radius: 15px; width: 500px; height:600px")
+        div.card(style="border-radius: 15px; width: 500px; height: 650px")
             div.card-body
                 h2.text-center.mb CREATE AN ACCOUNT
                 // be sure to add 'name' attribute into input, or req.body will be empty
@@ -30,9 +30,11 @@ block content
                                             
                     p.text-center.text-muted.mt-5.mb-0 Have already an account?     
                         a.fw-bold.text-body(href="/user/login") Login here       
-            
-    if errors 
-        ul 
-            for error in errors
-                li!=error.msg                            
+                        
+            if errors 
+                ul 
+                    for error in errors
+                        li!=error.msg   
                        
+            if error 
+                p #{error}               

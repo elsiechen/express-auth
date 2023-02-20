@@ -48,7 +48,12 @@ exports.signup_post = [
             const user_found = await User.findOne({email: req.body.email});
             // email already exist
             if(user_found){
-                return res.status(400).json({msg: 'User Already exists.'});
+                // return res.status(400).json({msg: 'Email Already exists.'});
+                return res.render('signup_form',{
+                    title: 'Sign Up',
+                    user,
+                    error: 'Email Already exists.'
+                });
             }
             
             // hash password using bcrypt 
