@@ -21,12 +21,13 @@ block content
                         input.form-control.form-control-lg#password(type="password", name='password')
                             
                     div.form-group
-                        input.form-check-input.ml-3#terms(type="checkbox" value="", name='terms')
+                        input.form-check-input.ml-3#terms(type="checkbox" value="", name='terms',
+                            onchange="document.getElementById('regBtn').disabled = !this.checked;")
                         label.form-check-.ml-5(for="terms") I agree all statements in 
                             a.text-body(href="#!") Terms of service 
                                         
                     div.d-flex.justify-content-center
-                        button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") Register
+                        button#regBtn.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit", disabled) Register
                                             
                     p.text-center.text-muted.mt-5.mb-0 Have already an account?     
                         a.fw-bold.text-body(href="/user/login") Login here       
