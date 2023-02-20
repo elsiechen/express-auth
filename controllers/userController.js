@@ -37,7 +37,6 @@ exports.signup_post = [
         // there's error, re-render the form with escaped and trimmed data with error message
         if(!errors.isEmpty()){
             return res.render('signup_form',{
-                title: 'Sign Up',
                 user,
                 errors: errors.array()
             });
@@ -49,7 +48,6 @@ exports.signup_post = [
             // email already exist
             if(user_found){
                 return res.render('signup_form',{
-                    title: 'Sign Up',
                     user,
                     error: 'Email Already exists.'
                 });
@@ -103,11 +101,15 @@ exports.login_post = [
         // extract errors from request
         const errors = validationResult(req);
 
+        // user input
+        let input = new User({
+            email: req.body.email
+        });
+
         // there's error, re-render the form with escaped and trimmed data with error message
         if(!errors.isEmpty()){
             return res.render('login_form',{
-                title: 'Log In',
-                email: req.body.email,
+                user: input,
                 errors: errors.array()
             });
         }
@@ -116,13 +118,23 @@ exports.login_post = [
             const user = await User.findOne({email: req.body.email});
             // user not exist
             if(!user){
-                return res.status(400).json({msg: 'User Not Exist'});
+                // return res.status(400).json({msg: 'User Not Exist'});
+                
+                return res.render('login_form',{
+                    user: input,
+                    error: 'User Not Exist.'
+                });
+
             }
             // validate if password is correct
             const isCorrect = await bcrypt.compare(req.body.password, user.password);
             // if password is not correct
             if(!isCorrect){
-                return res.status(400).json({msg: 'Incorrect Password'});
+                // return res.status(400).json({msg: 'Incorrect Password'});
+                return res.render('login_form',{
+                    user: input,
+                    error: 'Incorrect Password.'
+                });
             }
 
             const payload = {
@@ -135,7 +147,12 @@ exports.login_post = [
                 { expiresIn: 3600},
                 (err, token) =>{
                     if(err) return next(err);
-                    return res.status(200).json({token});
+                    console.log(`token: ${token}`);
+                    // return res.status(200).json({token});
+                    return res.render('home',{
+                        title: 'Home Page',
+                        error: 'Successfully logged in.'
+                    });
                 }
             );
         } catch(err){
