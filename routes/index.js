@@ -7,5 +7,10 @@ router.get('/', (req, res) => {
         title: 'Home Page',
     });
 });
-
+/* Terms page */
+router.get('/terms', (req, res) => {
+    res.render('terms',{
+        title: 'Terms Page',
+    });
+});
 module.exports = router;
