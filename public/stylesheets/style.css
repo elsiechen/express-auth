@@ -23,6 +23,10 @@ html, body {
     margin-top: 40px;
 }
 
+.mt-20 {
+    margin-top: 20px;
+}
+
 .ml-3 {
     margin-left: 3px;
 }

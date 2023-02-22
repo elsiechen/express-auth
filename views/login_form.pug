@@ -1,5 +1,5 @@
 extends layout 
-block content 
+block content       
     div.center.mp
         div.card(style="border-radius: 15px; width: 500px; height:550px")
             div.card-body
@@ -16,10 +16,29 @@ block content
                             
                     div.d-flex.justify-content-center.mt
                         button.btn.btn-success.btn-block.btn-lg.gradient-custom-4.text-body(type="submit") SIGN IN
-                               
+                    .center.mt-20 
+                        p OR
+                    // sign in with google button     
+                    div#g_id_onload(
+                        data-client_id="698300101947-tcdsjc8tifi6aggim4ibojv4rh7itf1l.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-login_uri="http://localhost:3000/user/login"
+                        data-auto_prompt="false")
+
+                    div.center.g_id_signin(
+                        data-type="standard"
+                        data-shape="rectangular"
+                        data-theme="outline"
+                        data-text="signin_with"
+                        data-size="large"
+                        data-locale="en-US"
+                        data-logo_alignment="center"
+                        data-width="400")
+           
                     p.text-center.text-muted.mt-5.mb-0 Not a member? 
                         a.fw-bold.text-body(href="/user/signup") Register here
-
+            
             if errors 
                 ul 
                     for error in errors
