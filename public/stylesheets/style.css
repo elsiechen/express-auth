@@ -1,7 +1,10 @@
 html, body {
     height: 100%;
-    background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
+    /*background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
+    */
+    background-color: rgb(229 231 235);
 }
+
 
 .height-80 {
     height: 80%;
