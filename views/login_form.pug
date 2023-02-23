@@ -1,5 +1,5 @@
 extends layout 
-block content       
+block content 
     div.center.mp
         div.card(style="border-radius: 15px; width: 500px; height:550px")
             div.card-body
@@ -21,6 +21,7 @@ block content
                     // sign in with google button     
                     div#g_id_onload(
                         data-client_id="698300101947-tcdsjc8tifi6aggim4ibojv4rh7itf1l.apps.googleusercontent.com"
+                        data-callback="handleCallback"
                         data-context="signin"
                         data-ux_mode="popup"
                         data-login_uri="http://localhost:3000/user/login"
