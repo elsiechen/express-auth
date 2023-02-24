@@ -8,6 +8,7 @@ router.get('/signup', userController.signup_get);
 router.post('/signup', userController.signup_post);
 router.get('/login', userController.login_get);
 router.post('/login', userController.login_post);
+router.post('/login/google', userController.login_google);
 router.get('/me', auth, userController.login_user_get);
 
 
