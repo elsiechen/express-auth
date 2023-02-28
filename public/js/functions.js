@@ -21,7 +21,7 @@
 
 function handleCredentialResponse(response) {
   console.log(response);
-
+  // send response to server
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "http://localhost:3000/user/login/google", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
